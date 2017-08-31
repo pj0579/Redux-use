@@ -21,12 +21,11 @@ react native redux流程梳理
 异步redux需要redux-thunk，之后再说怎么自己实现异步redux。
 redux-thunk提供了thunk，react-redux提供了applyMiddleware
 下面看 applyMiddleware源码
-function applyMiddleware() {
+
+  function applyMiddleware() {
   for (var _len = arguments.length, middlewares = Array(_len), _key = 0; _key < _len; _key++) {
     middlewares[_key] = arguments[_key];
-  }
-
-  return function (createStore) {
+  }return function (createStore) {
     return function (reducer, preloadedState, enhancer) {
       var store = createStore(reducer, preloadedState, enhancer);
       var _dispatch = store.dispatch;
