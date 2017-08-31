@@ -48,5 +48,6 @@ redux-thunk提供了thunk，react-redux提供了applyMiddleware
     	};
  	  };
     }
+applyMiddleware 返回一个函数，参数是createStore，这个函数也返回了一个函数，参数为reducer, preloadedState, enhancer。刚好对应 applyMiddleware(thunk)(createStore)(reducers);thunk为第一个参数，createStore为第二个参数，reducers为第三个参数。待续
 
 
