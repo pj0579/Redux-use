@@ -15,4 +15,39 @@ react native redux流程梳理
 
 `react-redux` 提供的 `Provider` 包裹`Store` 传递到子组件。
 
+###上述是redux同步应用
+下面介绍异步redux   
+异步redux需要分析一下源码才能够说清楚。
+异步redux需要redux-thunk，之后再说怎么自己实现异步redux。
+redux-thunk提供了thunk，react-redux提供了applyMiddleware
+下面看 applyMiddleware源码
+function applyMiddleware() {
+  for (var _len = arguments.length, middlewares = Array(_len), _key = 0; _key < _len; _key++) {
+    middlewares[_key] = arguments[_key];
+  }
+
+  return function (createStore) {
+    return function (reducer, preloadedState, enhancer) {
+      var store = createStore(reducer, preloadedState, enhancer);
+      var _dispatch = store.dispatch;
+      var chain = [];
+
+      var middlewareAPI = {
+        getState: store.getState,
+        dispatch: function dispatch(action) {
+          return _dispatch(action);
+        }
+      };
+      chain = middlewares.map(function (middleware) {
+        return middleware(middlewareAPI);
+      });
+      _dispatch = _compose2['default'].apply(undefined, chain)(store.dispatch);
+
+      return _extends({}, store, {
+        dispatch: _dispatch
+      });
+    };
+  };
+}
+
 
