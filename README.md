@@ -1,7 +1,7 @@
 react native redux流程梳理
 ---
 ![Alt text](https://raw.githubusercontent.com/pj0579/Redux-use/master/A2043282-5BEC-4FEF-9771-3DE81EAF0FCE.png)<br/>
-###图片来网络   描述部分来自redux中文网 和自己的理解 写给自己看的 <br/>
+###图片来网络   描述部分来自redux中文网 和自己的理解 写给自己看 <br/>
 执行流程讲述：<br/><br/>
 1.View触发事件，一般情况下你可以直接在 `Store` 实例上调用 `dispatch()`接受一个`action`作为参数）。一般情况在 `React native` 中使用 `Redux` ，俄们会使用 `react-redux` 提供一个 `Store` 实例内部的 `dispatch` 的 `connect` 函数 。 `Store` 就是把它们联系到一起的对象。`Store` 有以下属性和方法 <br/><br/>
 + 提供 `getState()` 方法获取 state ；<br/>
@@ -15,7 +15,7 @@ react native redux流程梳理
 
 `react-redux` 提供的 `Provider` 包裹`Store` 传递到子组件。
 
-###上述是redux同步应用
+###上述是redux同步应用<br/>
 下面介绍异步redux   
 异步redux需要分析一下源码才能够说清楚。
 异步redux需要redux-thunk，之后再说怎么自己实现异步redux。
@@ -38,9 +38,10 @@ redux-thunk提供了thunk，react-redux提供了applyMiddleware
     return {
       ...store,
       dispatch
+        }
+      }
     }
-  }
-}
-applyMiddleware 返回一个函数，参数是createStore，这个函数也返回了一个函数，参数为reducer, preloadedState, enhancer。刚好对应 applyMiddleware(thunk)(createStore)(reducers);thunk为第一个参数，createStore为第二个参数，reducers为第三个参数。待续
+    <br/>
+applyMiddleware 返回一个函数，参数是createStore，这个函数也返回了一个函数，参数为reducer, preloadedState, enhancer。刚好对应 applyMiddleware(thunk)(createStore)(reducers);thunk为第一个参数，createStore为第二个参数，reducers为第三个参数。最后返回Store和dispatch，这个dispatch经过改造。慢慢分析...middlewares
 
 
