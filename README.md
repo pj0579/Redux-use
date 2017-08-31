@@ -22,32 +22,25 @@ react native redux流程梳理
 redux-thunk提供了thunk，react-redux提供了applyMiddleware
 下面看 applyMiddleware源码
 
-  	function applyMiddleware() {
-  	for (var _len = arguments.length, middlewares = 	Array(_len), _key = 0; _key < _len; _key++) {
-    middlewares[_key] = arguments[_key];
-  	}return function (createStore) {
-    return function (reducer, preloadedState, enhancer) {
-      var store = createStore(reducer, preloadedState,  enhancer);
-      var _dispatch = store.dispatch;
-      var chain = [];
+  	export default function applyMiddleware(...middlewares) {
+    return (createStore) => (reducer, preloadedState, enhancer) => {
+    const store = createStore(reducer, preloadedState, enhancer)
+    let dispatch = store.dispatch
+    let chain = []
 
-      var middlewareAPI = {
-        getState: store.getState,
-        dispatch: function dispatch(action) {
-          return _dispatch(action);
-        }
-      };
-      chain = middlewares.map(function (middleware) {
-        return middleware(middlewareAPI);
-      });
-      _dispatch = _compose2['default'].apply(undefined, chain)(store.dispatch);
-
-      return _extends({}, store, {
-        dispatch: _dispatch
-      	  });
-    	};
- 	  };
+    const middlewareAPI = {
+      getState: store.getState,
+      dispatch: (action) => dispatch(action)
     }
+    chain = middlewares.map(middleware => middleware(middlewareAPI))
+    dispatch = compose(...chain)(store.dispatch)
+
+    return {
+      ...store,
+      dispatch
+    }
+  }
+}
 applyMiddleware 返回一个函数，参数是createStore，这个函数也返回了一个函数，参数为reducer, preloadedState, enhancer。刚好对应 applyMiddleware(thunk)(createStore)(reducers);thunk为第一个参数，createStore为第二个参数，reducers为第三个参数。待续
 
 
