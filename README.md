@@ -66,14 +66,19 @@ chain = middlewares.map(middleware => middleware(middlewareAPI))
           };
 </code></pre>
 最后下面这<br/>
-           dispatch = compose(...chain)(store.dispatch)
+ <pre><code>
+ dispatch = compose(...chain)(store.dispatch)
+</code></pre>
+           
 它返回<br/>
-           action => {
+            <pre><code>
+ action => {
            if (typeof action === 'function') {
            return action(dispatch, getState, extraArgument);
           }
            return next(action)
            };
+</code></pre>
 它可以根据action还是function去dispatch。
       
 
