@@ -55,7 +55,7 @@ applyMiddleware 返回一个函数，参数是createStore，这个函数也返�
       }
       const thunk = createThunkMiddleware();
 其中thunk作为参数传递给...middlewares，此时数组里只有一个元素。<br/>
-           chain = middlewares.map(middleware => middleware(middlewareAPI))
+                     chain = middlewares.map(middleware => middleware(middlewareAPI))
 这里面返回<br/>
            next => action => {
            if (typeof action === 'function') {
