@@ -53,27 +53,27 @@ applyMiddleware 返回一个函数，参数是createStore，这个函数也返�
     return next(action);
         };
       }
-    const thunk = createThunkMiddleware();
-其中thunk作为参数传递给...middlewares，此时数组里只有一个元素。
-     chain = middlewares.map(middleware => middleware(middlewareAPI))
-这里面返回
+    const thunk = createThunkMiddleware();<br/>
+其中thunk作为参数传递给...middlewares，此时数组里只有一个元素。<br/>
+     chain = middlewares.map(middleware => middleware(middlewareAPI))<br/>
+这里面返回<br/>
      next => action => {
      if (typeof action === 'function') {
       return action(dispatch, getState, extraArgument);
        }
 
      return next(action);
-        };
-最后下面这个
-    dispatch = compose(...chain)(store.dispatch)
-它返回
+        };<br/>
+最后下面这个<br/>
+    dispatch = compose(...chain)(store.dispatch)<br/>
+它返回<br/>
     action => {
      if (typeof action === 'function') {
       return action(dispatch, getState, extraArgument);
        }
 
      return next(action);
-        };
+        };<br/>
 它可以根据action还是function去dispatch。
       
 
