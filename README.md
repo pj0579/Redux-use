@@ -63,9 +63,9 @@ applyMiddleware 返回一个函数，参数是createStore，这个函数也返�
        }
 
       return next(action);
-        };
-        最后下面这个
-        dispatch = compose(...chain)(store.dispatch)
+      };
+      最后下面这
+      dispatch = compose(...chain)(store.dispatch)
         它返回
         action => {
         if (typeof action === 'function') {
