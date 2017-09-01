@@ -42,6 +42,41 @@ redux-thunk提供了thunk，react-redux提供了applyMiddleware
       }
     }
     <br/>
-applyMiddleware 返回一个函数，参数是createStore，这个函数也返回了一个函数，参数为reducer, preloadedState, enhancer。刚好对应 applyMiddleware(thunk)(createStore)(reducers);thunk为第一个参数，createStore为第二个参数，reducers为第三个参数。最后返回Store和dispatch，这个dispatch经过改造。慢慢分析...middlewares
+applyMiddleware 返回一个函数，参数是createStore，这个函数也返回了一个函数，参数为reducer, preloadedState, enhancer。刚好对应 applyMiddleware(thunk)(createStore)(reducers);thunk为第一个参数，createStore为第二个参数，reducers为第三个参数。最后返回Store和dispatch，这个dispatch经过改造,可以接受参数为函数的方法，具体实现在redux-thunk源码里面如下：
 
+    function createThunkMiddleware(extraArgument) {
+    return ({ dispatch, getState }) => next => action => {
+    if (typeof action === 'function') {
+      return action(dispatch, getState, extraArgument);
+       }
+
+    return next(action);
+        };
+      }
+    const thunk = createThunkMiddleware();
+其中thunk作为参数传递给...middlewares，此时数组里只有一个元素。
+     chain = middlewares.map(middleware => middleware(middlewareAPI))
+这里面返回
+     next => action => {
+     if (typeof action === 'function') {
+      return action(dispatch, getState, extraArgument);
+       }
+
+     return next(action);
+        };
+最后下面这个
+    dispatch = compose(...chain)(store.dispatch)
+它返回
+    action => {
+     if (typeof action === 'function') {
+      return action(dispatch, getState, extraArgument);
+       }
+
+     return next(action);
+        };
+它可以根据action还是function去dispatch。
+      
+
+
+    
 
