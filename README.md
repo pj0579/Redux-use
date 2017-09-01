@@ -79,8 +79,11 @@ chain = middlewares.map(middleware => middleware(middlewareAPI))
            return next(action)
            };
 </code></pre>
-它可以根据action还是function去dispatch。
-      
+它可以根据action还是function去dispatch。<br/>
+拿fetch做例子，你可以在fetch的时候dispatch一个action type为loading，<br/>
+在成功的时候dispatch一个action type为sucess<br/>
+在失败的时候dispatch一个action type为fail<br/>
+而不需要自己去拓展一些功能      
 
 
     
