@@ -1,9 +1,9 @@
 react native redux流程梳理
 ---
 ![Alt text](https://raw.githubusercontent.com/pj0579/Redux-use/master/A2043282-5BEC-4FEF-9771-3DE81EAF0FCE.png)<br/>
-###图片来网络   自己的理解 写给自己看 <br/>
+图片来网络   自己的理解 写给自己看 <br/>
 执行流程讲述：<br/><br/>
-1.View触发事件，一般情况下你可以直接在 `Store` 实例上调用 `dispatch()`（接受一个`action`作为参数）。在 `React native` 中使用 `Redux` ，我们会使用 `react-redux` 提供的 `connect` 函数，它会提供一个 `Store` 实例内部的 `dispatch` 。 `Store` 就是把它们联系到一起的对象。`Store` 有以下属性和方法 <br/><br/>
+1.View触发事件，一般情况下你可以直接在 `Store` 实例上(由connect函数提供)调用 `dispatch()`（接受一个`action`作为参数）。在 `React native` 中使用 `Redux` ，我们会使用 `react-redux` 提供的 `connect` 函数（从context对象中获取），它会提供一个 `Store` 实例内部的 `dispatch` 。 `Store` 就是把它们联系到一起的对象。`Store` 有以下属性和方法 <br/><br/>
 + 提供 `getState()` 方法获取 state ；<br/>
 + 提供 `dispatch(action)` 方法更新 state ；<br/>
 + 通过 `subscribe(listener)` 注册监听器;用于订阅更新<br/>
